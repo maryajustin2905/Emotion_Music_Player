@@ -1,7 +1,8 @@
-flask
-gunicorn
-deepface
-opencv-python
+flask==2.3.2
+gunicorn==21.2.0
+deepface==0.0.79
+opencv-python==4.8.0.76
 tensorflow==2.12.0
 keras==2.12.0
-Werkzeug
+Werkzeug==2.3.7
+tf-keras

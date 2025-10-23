@@ -8,6 +8,11 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['SONG_FOLDER'] = 'songs'
 
 @app.route('/')
+def home():
+    return "Emotion Music Player is running!"
+
+
+@app.route('/')
 def index():
     return render_template('index.html')
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emotion-Based Music Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f0f8ff;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      margin-bottom: 30px;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎶 Emotion-Based Music Player</h1>
+
+  <form id="uploadForm" action="/analyze" method="post" enctype="multipart/form-data">
+    <label>Select an image:</label><br>
+    <input type="file" name="image"><br><br>
+    <button type="submit">Analyze Uploaded Image</button>
+  </form>
+
+  <hr>
+
+  <h2>Or use your webcam:</h2>
+  <video id="video" width="320" height="240" autoplay></video><br>
+  <button id="captureBtn">Capture & Analyze</button>
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+  {% if emotion %}
+    <h2>Detected Emotion: {{ emotion }}</h2>
+    <audio controls autoplay>
+      <source src="{{ song_url }}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  {% endif %}
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('captureBtn');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => video.srcObject = stream)
+      .catch(err => console.error("Webcam access error:", err));
+
+    captureBtn.onclick = () => {
+      const context = canvas.getContext('2d');
+      canvas.style.display = 'block';
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob(blob => {
+        const formData = new FormData();
+        formData.append('image', blob, 'webcam.jpg');
+
+        fetch('/analyze', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.text())
+        .then(html => document.body.innerHTML = html)
+        .catch(err => console.error("Upload error:", err));
+      }, 'image/jpeg');
+    };
+  </script>
+</body>
+</html>

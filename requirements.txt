@@ -2,7 +2,7 @@ setuptools>=65.5.0
 wheel>=0.41.0
 flask==2.3.2
 gunicorn==21.2.0
-git+https://github.com/serengil/deepface.git
+git+https://github.com/serengil/deepface.git@master#egg=deepface
 opencv-python==4.8.0.76
 tensorflow==2.20.0
 keras==3.0.0

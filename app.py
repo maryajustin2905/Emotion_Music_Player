@@ -8,11 +8,6 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['SONG_FOLDER'] = 'songs'
 
 @app.route('/')
-def home():
-    return "Emotion Music Player is running!"
-
-
-@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -29,11 +24,14 @@ def analyze():
 
     try:
         print("🔍 Starting emotion analysis...")
-        analysis = DeepFace.analyze(img_path=filepath, actions=['emotion'], detector_backend='opencv')
-, enforce_detection=False)
+        analysis = DeepFace.analyze(
+            img_path=filepath,
+            actions=['emotion'],
+            detector_backend='opencv',
+            enforce_detection=False
+        )
         print("🔎 DeepFace output:", analysis)
 
-        # Handle both list and dict formats
         if isinstance(analysis, list):
             emotion = analysis[0].get('dominant_emotion', 'neutral')
         elif isinstance(analysis, dict):

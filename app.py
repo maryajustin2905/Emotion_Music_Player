@@ -24,7 +24,8 @@ def analyze():
 
     try:
         print("🔍 Starting emotion analysis...")
-        analysis = DeepFace.analyze(img_path=filepath, actions=['emotion'], enforce_detection=False)
+        analysis = DeepFace.analyze(img_path=filepath, actions=['emotion'], detector_backend='opencv')
+, enforce_detection=False)
         print("🔎 DeepFace output:", analysis)
 
         # Handle both list and dict formats

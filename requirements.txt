@@ -1,12 +1,7 @@
-setuptools>=65.5.0
-wheel>=0.41.0
 flask==2.3.2
 gunicorn==21.2.0
 deepface==0.0.79
 opencv-python==4.8.0.76
-tensorflow==2.20.0
-keras==3.0.0
-tf-keras
 numpy==1.23.5
 Pillow==9.5.0
 Werkzeug==2.3.7
